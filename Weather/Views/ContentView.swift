@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import CoreLocation
 import CoreLocationUI
 
 struct ContentView: View {
@@ -27,12 +26,13 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     Text(selectedGeocoding.weather[0].description).font(.headline).frame(maxWidth: .infinity, alignment: .center)
-                    Text("\(selectedGeocoding.main.temp, specifier: "%.1f")°K").font(.largeTitle).frame(maxWidth: .infinity, alignment: .center)
+                    Text("\(viewModel.localeTemperature)")
+                        .font(.largeTitle).frame(maxWidth: .infinity, alignment: .center)
                 } else {
                     if let location = locationManager.location {
                         Text("Getting Weather for location (lat:\(location.latitude),lon\(location.longitude)")
                             .frame(maxWidth: .infinity, alignment: .center)
-                        // ToDo: Call updateWeatherByLocation
+                            .onAppear { viewModel.updateWeather(lat: location.latitude, lon: location.longitude) }
                     } else {
                         // Wait for search city, no currentLocation allowed
                         Text("Please enter a City Name or")
@@ -40,11 +40,13 @@ struct ContentView: View {
                     }
                 }
                 LocationButton {
+                    viewModel.selectedGeocoding = nil
                     locationManager.requestLocation()
-                }
+                }.foregroundColor(.white)
+                .cornerRadius(15)
+                .symbolVariant(.fill)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding()
-                
             }
             .navigationTitle("Weather")
         }
