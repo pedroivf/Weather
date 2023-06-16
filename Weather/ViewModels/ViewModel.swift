@@ -11,6 +11,7 @@ extension ContentView {
     // In WWDC 2023, there is a new "Observable" macro that can simplify this ObservableObject/Publishers and improve the app's performance.
     @MainActor class ViewModel: ObservableObject {
         @Published var selectedGeocoding: Geocoding?
+    
         let apiKey = Bundle.main.infoDictionary?["APIKEY"] as? String ?? ""
         
         func updateWeather(query: String) {

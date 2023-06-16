@@ -11,6 +11,7 @@ import Foundation
 struct Geocoding: Codable {
     let coord: Coord
     let weather: [Weather]
+    let main: Temp
 }
 
 struct Coord: Codable {
@@ -22,4 +23,8 @@ struct Weather: Codable {
     let main: String
     let description: String
     let icon: String
+}
+
+struct Temp: Codable {
+    let temp: Double
 }
